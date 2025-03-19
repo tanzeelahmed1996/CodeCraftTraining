@@ -8,11 +8,13 @@ namespace CDWarehouse
     {
 
         public Mock<IChartNotifier> _notifyChart;
+        public Mock<ITop100Chart> _top100Chart;
 
         [SetUp]
         public void Setup()
         {
             _notifyChart = new Mock<IChartNotifier>();
+            _top100Chart = new Mock<ITop100Chart>();
         }
 
         [Test]
@@ -20,7 +22,7 @@ namespace CDWarehouse
         {
             var isInStock = false;
             var title = "Tanzeel's Greatest Hits";
-            var wareHouse = new WareHouse(_notifyChart.Object);
+            var wareHouse = new WareHouse(_notifyChart.Object, _top100Chart.Object);
             isInStock = wareHouse.IsTitleInStock(title);
             NUnit.Framework.Assert.That(isInStock, Is.EqualTo(true));
         }
