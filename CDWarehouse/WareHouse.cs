@@ -4,11 +4,13 @@
     {
         private readonly IChartNotifier _chartNotifier;
         private readonly ITop100Chart _top100Chart;
+        private readonly ICompetitorPrices _competitorPrices;
 
-        public WareHouse(IChartNotifier chartNotifier, ITop100Chart top100Chart)
+        public WareHouse(IChartNotifier chartNotifier, ITop100Chart top100Chart, ICompetitorPrices competitorPrices)
         {
             _chartNotifier = chartNotifier;
             _top100Chart = top100Chart;
+            _competitorPrices = competitorPrices;
         }
 
         public bool IsTitleInStock(string title)
@@ -16,7 +18,7 @@
             return true;
         }
 
-        public void BuyCd(CD cD, Customer customer, CreditCard card, ICompetitorPrices competitorPrices)
+        public void BuyCd(CD cD, Customer customer, CreditCard card)
         {
             bool isCreditCardAccepted = card.IsValid;
 
@@ -29,7 +31,7 @@
             {
                 if (_top100Chart.IsTop100("Tanzeel", cD.Title))
                 {
-                    double competitorPrice = competitorPrices.GetLowestPrice("Tanzeel", cD.Title);
+                    double competitorPrice = _competitorPrices.GetLowestPrice("Tanzeel", cD.Title);
 
                     if (competitorPrice < cD.Price)
                     {
