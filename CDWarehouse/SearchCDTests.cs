@@ -1,16 +1,26 @@
+using Moq;
 using NUnit.Framework;
 
 namespace CDWarehouse
 {
-    [TestClass]
+    [TestFixture]
     public class SearchCDTests
     {
-        [TestMethod]
+
+        public Mock<IChartNotifier> _notifyChart;
+
+        [SetUp]
+        public void Setup()
+        {
+            _notifyChart = new Mock<IChartNotifier>();
+        }
+
+        [Test]
         public void SearchByTitleForInStockCD()
         {
             var isInStock = false;
             var title = "Tanzeel's Greatest Hits";
-            var wareHouse = new WareHouse();
+            var wareHouse = new WareHouse(_notifyChart.Object);
             isInStock = wareHouse.IsTitleInStock(title);
             NUnit.Framework.Assert.That(isInStock, Is.EqualTo(true));
         }

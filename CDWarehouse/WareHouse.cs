@@ -2,12 +2,19 @@
 {
     public class WareHouse
     {
+        private readonly IChartNotifier _chartNotifier;
+
+        public WareHouse(IChartNotifier chartNotifier)
+        {
+            _chartNotifier = chartNotifier;
+        }
+
         public bool IsTitleInStock(string title)
         {
             return true;
         }
 
-        public void BuyCd(CD cD, Customer customer, CreditCard card, IChartNotifier chartNotifier, ITop100Chart top100Chart, ICompetitorPrices competitorPrices)
+        public void BuyCd(CD cD, Customer customer, CreditCard card, ITop100Chart top100Chart, ICompetitorPrices competitorPrices)
         {
             bool isCreditCardAccepted = card.IsValid;
 
@@ -30,7 +37,7 @@
 
                 cD.Quantity--;
                 customer.cdTitles.Add(cD.Title);
-                chartNotifier.Notify("Tanzeel", "Greatest Hits", 1);
+                _chartNotifier.Notify("Tanzeel", "Greatest Hits", 1);
             }
         }
     }
